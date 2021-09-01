@@ -4,7 +4,8 @@
   "description": "This API allows users to convert a TypeScript Type file into an OAS 3.0 schema file.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "debug": "nodemon index.js",
     "test": "jest --runInBand",
     "eslint": "eslint \"**/*.js\""
   },
