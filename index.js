@@ -1,30 +1,38 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const ts2Oas = require('@joespanbauer/ts-2-oas');
+const express = require('express')
+const bodyParser = require('body-parser')
+const ts2Oas = require('@joespanbauer/ts-2-oas')
 
-const app = express();
+const app = express()
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Credentials', true)
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
+  next()
+})
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.text())
 
 // Routes
 app.post('/', (req, res) => {
-  let result;
+  let result
   try {
-    const { body } = req;
-    result = ts2Oas(body);
+    const { body } = req
+    result = ts2Oas(body)
   } catch (e) {
-    result = undefined;
-    res.status(500);
+    result = undefined
+    res.status(500)
   }
 
   if (result) {
-    res.send(result);
+    res.send(result)
   }
-});
+})
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log('Listening on port 3000');
-});
+  console.log('Listening on port 3000')
+})
